@@ -49,7 +49,6 @@ def resource_loader_file(resource_dir, desired_lats, desired_lons, year="2012"):
     for i in range(0, len(files_solar)):
         strFile = solar_dir / files_solar[i]
         df = pd.read_csv(strFile, nrows=1)
-        # print(df['Longitude'][0])
         if str(df['Longitude'][0]) == '-101.94':
             x_lon_solar[i] = files_solar[i][:-13].rsplit('_')[1]
         else:

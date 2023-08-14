@@ -7,7 +7,7 @@ import json
 from hybrid.sites import SiteInfo
 from hybrid.sites import flatirons_site as sample_site
 from hybrid.keys import set_developer_nrel_gov_key
-from examples.H2_Analysis.hopp_for_h2 import hopp_for_h2
+from examples.H2_Analysis.hopp_for_resilience import hopp_for_resilience
 from examples.H2_Analysis.run_h2a import run_h2a as run_h2a
 from examples.H2_Analysis.simple_dispatch import SimpleDispatch
 from examples.H2_Analysis.simple_cash_annuals import simple_cash_annuals
@@ -140,8 +140,10 @@ desired_lats = 43.07 #35.21 #np.linspace(23.833504, 49.3556, N_lat)
 desired_lons = -94.23 #101.24 #np.linspace(-129.22923, -65.7146, N_lon)
 load_resource_from_file = False
 resource_dir = Path(__file__).parent.parent.parent / "resource_files"
-print('resource_dir: ', resource_dir)
-sitelist_name = 'filtered_site_details_{}_lats_{}_lons_{}_resourceyear'.format(N_lat, N_lon, resource_year)
+print('resource_dir: ', Path(__file__).parent.parent.parent / "resource_files")
+sitelist_name = 'Algona_site_details_{}_{}_resourceyear'.format(desired_lats, desired_lons, resource_year)
+print('sitelist_dir: ', Path(__file__).parent.parent.parent / "resource_files")
+
 
 if load_resource_from_file:
     # Loads resource files in 'resource_files', finds nearest files to 'desired_lats' and 'desired_lons'
@@ -200,6 +202,7 @@ scenario_choice = 'Resilience Storage Sizing Analysis'
 # site_selection = 'Site 1'
 parent_path = os.path.abspath('')
 results_dir = parent_path + '/examples/H2_Analysis/results/'
+print('results_dir: ', results_dir)
 
 itc_avail = 'no'
 discount_rate = 0.089
@@ -367,12 +370,13 @@ for forced_storage_size_mwh in storage_size_mwh_options:
 
                 hybrid_plant, combined_pv_wind_power_production_hopp, combined_pv_wind_curtailment_hopp,\
                 energy_shortfall_hopp, gen, annual_energies, wind_plus_solar_npv, npvs, lcoe =  \
-                    hopp_for_h2(site, scenario, technologies,
-                                wind_size_mw, solar_size_mw, storage_size_mw, storage_size_mwh, storage_hours,
-                    wind_cost_kw, solar_cost_kw, storage_cost_kw, storage_cost_kwh,
-                    kw_continuous, load,
-                    custom_powercurve,
-                    electrolyzer_size, grid_connected_hopp=True, wind_om_cost_kw=wind_om_cost_kw)
+                    hopp_for_resilience(site, scenario, technologies, wind_size_mw, 
+                                solar_size_mw, storage_size_mw, storage_size_mwh, 
+                                storage_hours, wind_cost_kw, solar_cost_kw, 
+                                storage_cost_kw, storage_cost_kwh, kw_continuous, 
+                                load, custom_powercurve,
+                                interconnection_size_mw=electrolyzer_size, 
+                                grid_connected_hopp=True, wind_om_cost_kw=wind_om_cost_kw)
 
                 wind_installed_cost = hybrid_plant.wind.total_installed_cost
                 if solar_size_mw > 0:

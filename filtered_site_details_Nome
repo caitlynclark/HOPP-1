@@ -1,0 +1,2 @@
+,site_nums,Lat,Lon,solar_filenames,wind_filenames,year
+0,1,64.503889,-165.399444,64.503889_-165.399444_60m_psmv3_60_2018.csv,64.503889_-165.399444_windtoolkit_2018_60min_60m.srw,resource_files

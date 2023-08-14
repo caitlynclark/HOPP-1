@@ -123,6 +123,7 @@ def hopp_for_h2(site, scenario, technologies, wind_size_mw, solar_size_mw, stora
     if custom_powercurve:
         parent_path = os.path.abspath(os.path.dirname(__file__))
         powercurve_file = open(os.path.join(parent_path, scenario['Powercurve File']))
+        # print('powercurve_file:', powercurve_file)
         powercurve_file_extension = pathlib.Path(os.path.join(parent_path, scenario['Powercurve File'])).suffix
         if powercurve_file_extension == '.csv':
             curve_data = pd.read_csv(os.path.join(parent_path, scenario['Powercurve File']))            

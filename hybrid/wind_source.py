@@ -41,6 +41,7 @@ class WindPlant(PowerSource):
                 raise NotImplementedError
         else:
             system_model = Windpower.default("WindPowerSingleOwner")
+            print('system_model: ', system_model)
             financial_model = Singleowner.from_existing(system_model, "WindPowerSingleOwner")
 
         super().__init__("WindPlant", site, system_model, financial_model)

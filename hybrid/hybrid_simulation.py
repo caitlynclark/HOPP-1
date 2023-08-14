@@ -400,6 +400,7 @@ class HybridSimulation:
         total_gen_before_battery = None
         systems = ['pv', 'wind']
         for system in systems:
+            # print(system)
             model = getattr(self, system)
             if model:
                 hybrid_size_kw += model.system_capacity_kw
@@ -412,6 +413,7 @@ class HybridSimulation:
                                      " n_timesteps {} * project_life {}".format(system, self.site.n_timesteps,
                                                                                 project_life))
                 total_gen += project_life_gen
+                # print(sum(total_gen))
 
         if self.dispatch_builder.needs_dispatch:
             """
@@ -434,7 +436,8 @@ class HybridSimulation:
         self.grid.generation_profile = total_gen
         self.grid.system_capacity_kw = hybrid_size_kw
         self.grid.simulate_power(project_life, lifetime_sim)
-
+        
+        
     def simulate_financials(self, project_life):
         systems = ['pv', 'wind']
         for system in systems:

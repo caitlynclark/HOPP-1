@@ -32,8 +32,9 @@ class WindResource(Resource):
         :param kwargs:
         """
         super().__init__(lat, lon, year)
-
+        
         if os.path.isdir(path_resource):
+            # print(path_resource)
             self.path_resource = path_resource
 
         self.path_resource = os.path.join(self.path_resource, 'wind')
@@ -50,8 +51,10 @@ class WindResource(Resource):
             self.filename = filepath
 
         self.check_download_dir()
+        # print(self.check_download_dir())
 
         if not os.path.isfile(self.filename):
+            # print('filename: ', self.filename, os.path.isfile(self.filename))
             self.download_resource()
 
         self.format_data()
@@ -156,6 +159,7 @@ class WindResource(Resource):
             raise FileNotFoundError(self.filename + " does not exist. Try `download_resource` first.")
 
         self.data = self.filename
+        print('self.filename', self.filename)
 
     @Resource.data.setter
     def data(self, data_file):
